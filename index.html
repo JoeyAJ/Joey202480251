@@ -56,6 +56,11 @@
         .literature-card.active {
              border-color: #60a5fa;
              transform: scale(1.05);
+             background: rgba(59, 130, 246, 0.1);
+        }
+        .progress-bar {
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
     </style>
 </head>
@@ -63,15 +68,48 @@
 
     <div class="container mx-auto p-4 md:p-8">
         <!-- Header -->
-        <header class="mb-8">
-            <h1 class="text-4xl md:text-5xl font-black gradient-text">AI 기반 ETF 투자 전략 대시보드</h1>
-            <p class="text-slate-400 mt-2">제출자: ZHAO JIA (조 가) | 학번: 202480251</p>
+        <header class="mb-8 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-black gradient-text">AI 기반 ETF 투자 전략 대시보드</h1>
+                <p class="text-slate-400 mt-2 text-sm md:text-base">제출자: ZHAO JIA (조 가) | 학번: 202480251</p>
+            </div>
+             <div class="hidden md:flex space-x-6">
+                <a href="#intro" class="text-slate-300 font-medium hover:text-blue-400 transition duration-300">도입</a>
+                <a href="#dashboard" class="text-slate-300 font-medium hover:text-blue-400 transition duration-300">대시보드</a>
+                <a href="#methodology" class="text-slate-300 font-medium hover:text-blue-400 transition duration-300">적용 방법</a>
+                <a href="#references" class="text-slate-300 font-medium hover:text-blue-400 transition duration-300">참고 문헌</a>
+            </div>
         </header>
 
-        <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Section 1: Introduction to Core Literature -->
+        <section id="intro" class="my-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold gradient-text">연구를 위한 핵심 문헌 소개</h2>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto">본 연구는 다음 네 편의 핵심 선행 연구를 바탕으로 독창적인 AI 투자 전략 프레임워크를 구축했습니다.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <h3 class="text-lg font-bold text-blue-400">모델의 기반</h3>
+                    <p class="text-slate-300 mt-2 text-sm">전통 금융 이론(FF-3)과 딥러닝(LSTM)의 결합이 최적의 예측 성과를 낼 수 있음을 입증한 <strong class="text-white">Shih (2024)</strong>의 연구를 모델의 기초로 삼았습니다.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <h3 class="text-lg font-bold text-blue-400">검증의 엄격성</h3>
+                    <p class="text-slate-300 mt-2 text-sm">학술적 성과와 실전의 괴리를 지적한 <strong class="text-white">Pyo (2017)</strong>의 통찰에 따라, 엄격한 OOS(Out-of-Sample) 검증 방법론을 채택하여 전략의 신뢰도를 높였습니다.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <h3 class="text-lg font-bold text-blue-400">결정의 기준</h3>
+                    <p class="text-slate-300 mt-2 text-sm">실제 수익률에 직결되는 '정밀도'의 중요성을 강조한 <strong class="text-white">Hwang (2021)</strong>의 연구를 바탕으로, 상승장과 하락장 모델을 분리하는 의사결정 메커니즘을 도입했습니다.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl text-center">
+                    <h3 class="text-lg font-bold text-blue-400">전략의 최적화</h3>
+                    <p class="text-slate-300 mt-2 text-sm">전략의 장기적 안정성을 위해 <strong class="text-white">Lee (2025)</strong>의 연구처럼 전역 최적화 알고리즘(DE)을 사용하여 모델 파라미터를 미세 조정하고 최상의 성과를 추구합니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Grid -->
+        <div id="dashboard" class="grid grid-cols-1 lg:grid-cols-3 gap-6 my-12">
             
-            <!-- Main Content: KPIs and Chart -->
             <div class="lg:col-span-2 flex flex-col gap-6">
                 <!-- KPIs -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -117,43 +155,53 @@
             </div>
 
             <!-- Side Content: Literature Review -->
-            <div class="lg:col-span-1 glass-card p-6 rounded-2xl">
-                <h2 class="text-2xl font-bold text-white mb-4">핵심 문헌 연구</h2>
-                <div class="space-y-4" id="literature-container">
+            <div class="lg:col-span-1 glass-card p-6 rounded-2xl flex flex-col">
+                <h2 class="text-2xl font-bold text-white mb-4">핵심 문헌 상세 분석</h2>
+                <div class="space-y-3" id="literature-container">
                     <!-- Literature cards will be injected here by JS -->
                 </div>
-                 <div id="literature-details" class="mt-6 p-4 bg-slate-900/50 rounded-lg min-h-[120px]">
-                    <h3 id="detail-title" class="text-lg font-bold text-blue-400">문헌을 클릭하여 상세 정보를 확인하세요.</h3>
-                    <p id="detail-summary" class="text-sm text-slate-300 mt-2"></p>
-                    <div id="detail-metrics" class="mt-3"></div>
+                 <div id="literature-details" class="mt-6 p-4 bg-slate-900/50 rounded-lg flex-grow flex flex-col justify-center">
+                     <div id="details-content" class="overflow-y-auto">
+                        <h3 id="detail-title" class="text-lg font-bold text-blue-400">문헌을 클릭하여 상세 정보를 확인하세요.</h3>
+                        <div id="detail-sections"></div>
+                     </div>
                 </div>
             </div>
 
-            <!-- Integrated Pipeline -->
-            <div class="lg:col-span-3 glass-card p-6 rounded-2xl">
-                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold gradient-text">통합 연구 파이프라인</h2>
-                    <p class="text-slate-400 mt-2 max-w-2xl mx-auto">각 문헌의 핵심 아이디어를 연결하여 완전한 퀀트 연구 프로세스를 구성합니다.</p>
+            <!-- Section 2: How to Apply Literature -->
+            <div id="methodology" class="lg:col-span-3 glass-card p-8 rounded-2xl">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold gradient-text">문헌을 연구에 적용하는 방법</h2>
+                    <p class="text-slate-400 mt-2 max-w-3xl mx-auto">네 편의 핵심 문헌을 유기적으로 통합하여, 본 연구만의 독창적인 퀀트 투자 전략 프레임워크를 다음과 같이 구축합니다.</p>
                 </div>
-                 <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2">
-                     <div class="pipeline-card text-center p-4">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mx-auto mb-4 border-2 border-blue-500/30"><svg class="w-8 h-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z" /></svg></div>
-                        <h3 class="text-lg font-bold text-slate-100">A. 모델 기준</h3><p class="text-slate-400 text-sm mt-1">LSTM x FF-3 (Shih)</p>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-blue-500/20 text-blue-300 font-bold">1</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-100">가설 및 모델 설정 (Shih, 2024 기반)</h4>
+                            <p class="text-slate-300">Shih의 연구를 바탕으로, 전통 금융 이론(Fama-French 3요인)을 딥러닝 모델(LSTM)에 결합하여 시장의 구조적 요인과 비선형 패턴을 동시에 포착하는 기본 모델을 설정합니다.</p>
+                        </div>
                     </div>
-                    <div class="text-slate-600 text-3xl mx-4 my-2 md:my-0">→</div>
-                     <div class="pipeline-card text-center p-4">
-                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mx-auto mb-4 border-2 border-blue-500/30"><svg class="w-8 h-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0 1 12 3c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.451.325-2.826.895-4.036m10.105-5.886a11.956 11.956 0 0 0-5.682 3.328m5.682-3.328a3.75 3.75 0 0 1 2.832 5.682" /></svg></div>
-                        <h3 class="text-lg font-bold text-slate-100">B. 검증 프레임워크</h3><p class="text-slate-400 text-sm mt-1">롤링 비중첩 OOS (Pyo)</p>
+                     <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-blue-500/20 text-blue-300 font-bold">2</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-100">엄격한 성과 검증 (Pyo, 2017 기반)</h4>
+                            <p class="text-slate-300">Pyo의 경고에 따라, '롤링 비중첩 표본 외(Out-of-Sample)' 방식을 사용하여 모델의 일반화 성능을 엄격하게 검증하고 과적합 위험을 최소화합니다.</p>
+                        </div>
                     </div>
-                    <div class="text-slate-600 text-3xl mx-4 my-2 md:my-0">→</div>
-                     <div class="pipeline-card text-center p-4">
-                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mx-auto mb-4 border-2 border-blue-500/30"><svg class="w-8 h-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" /></svg></div>
-                        <h3 class="text-lg font-bold text-slate-100">C. 의사결정 메커니즘</h3><p class="text-slate-400 text-sm mt-1">정밀도 기반 분리 모델 (Hwang)</p>
+                     <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-blue-500/20 text-blue-300 font-bold">3</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-100">실용적 투자 결정 (Hwang, 2021 기반)</h4>
+                            <p class="text-slate-300">Hwang의 통찰을 적용하여, 단순 예측 정확도보다 실제 수익률에 직결되는 '정밀도'를 기준으로 상승장과 하락장 모델을 분리하고, 이를 조합하여 실용적인 투자 시그널을 생성합니다.</p>
+                        </div>
                     </div>
-                     <div class="text-slate-600 text-3xl mx-4 my-2 md:my-0">→</div>
-                     <div class="pipeline-card text-center p-4">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-500/10 mx-auto mb-4 border-2 border-blue-500/30"><svg class="w-8 h-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg></div>
-                        <h3 class="text-lg font-bold text-slate-100">D. 파라미터 튜닝</h3><p class="text-slate-400 text-sm mt-1">DE 전역 최적화 (Lee)</p>
+                     <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-blue-500/20 text-blue-300 font-bold">4</div>
+                        <div>
+                            <h4 class="font-bold text-lg text-slate-100">전략 최적화 (Lee, 2025 기반)</h4>
+                            <p class="text-slate-300">마지막으로, Lee의 연구처럼 '차분 진화(DE)'와 같은 전역 최적화 알고리즘을 사용하여 전략의 모든 파라미터를 미세 조정하고, 장기적으로 안정적인 최상의 성과를 추구합니다.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -177,24 +225,106 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const literatureData = [
-                { id: 'hwang', title: '코스피 방향 예측 모델 (Hwang, 2021)', summary: '하이브리드 모델을 통해 KOSPI 방향 예측, \'정밀도\'를 핵심 지표로 수익률 극대화 목표.', metrics: [{label: '하락 예측 정확도', value: 79.8, color: 'blue'}, {label: '하락 예측 정밀도', value: 64.3, color: 'violet'}] },
-                { id: 'lee', title: 'ETF 분할매매 전략 최적화 (Lee, 2025)', summary: '기술 지표 기반 동적 자산 배분 전략 제시. DE 알고리즘으로 파라미터를 최적화하여 강건한 전략 구축.', metrics: [{label: '연평균 수익률 (검증)', value: 39.5, color: 'blue'}] },
-                { id: 'pyo', title: 'ML 예측력 가설 검정 (Pyo, 2017)', summary: '엄격한 백테스트 결과, 머신러닝의 단순 예측 정확도는 50% 수준에 불과함을 보이며 시장 예측의 어려움 강조.', metrics: [{label: 'SVM 모델 정확도', value: 52.9, color: 'amber'}] },
-                { id: 'shih', title: '딥러닝과 FF-3 모델 비교 (Shih, 2024)', summary: 'LSTM과 Fama-French 3요인 변수 결합 시 ETF 수익률 예측 오차가 가장 낮음을 발견. 전통 이론과 딥러닝의 시너지를 입증.', metrics: [{label: 'LSTM+FF-3 오차 최소화', value: 100, color: 'green'}]}
+                { 
+                    id: 'shih', 
+                    title: '딥러닝과 FF-3 모델 비교 (Shih, 2024)', 
+                    question: '딥러닝 모델과 전통적인 Fama-French 3요인 모델 중 어느 쪽이 ETF 수익률 예측에 더 효과적인가? 또한, 이 둘을 어떻게 결합해야 최적의 성능을 낼 수 있는가?',
+                    summary: 'LSTM과 Fama-French 3요인 변수 결합 시 예측 오차가 가장 낮음을 발견. 복잡한 모델보다 전통 금융 이론과 딥러닝 기술의 시너지가 더 효과적이라는 통찰을 제공.', 
+                    metrics: [
+                        {label: 'LSTM+FF-3 오차 최소화 달성도', value: 100, color: 'green'}
+                    ] 
+                },
+                { 
+                    id: 'pyo', 
+                    title: 'ML 예측력 가설 검정 (Pyo, 2017)', 
+                    question: '엄격한 검증 프레임워크 하에서 머신러닝 모델이 실제로 시장 예측에 유의미한 성능을 보이는가? Google 트렌드나 앙상블 기법은 예측력 향상에 기여하는가?',
+                    summary: '실제 거래와 유사한 \'롤링 윈도우\' 방식 백테스트 결과, 머신러닝의 예측 정확도는 50% 수준으로 무작위와 비슷했으며, Google 트렌드나 앙상블 기법도 효과가 없었음을 보임.', 
+                    metrics: [
+                        {label: 'SVM 모델 정확도', value: 52.9, color: 'amber'}
+                    ] 
+                },
+                { 
+                    id: 'hwang', 
+                    title: '코스피 방향 예측 모델 (Hwang, 2021)', 
+                    question: 'KOSPI 지수의 일별 방향을 예측하는 하이브리드 머신러닝 모델을 개발하고, 이를 ETF 거래에 적용하여 예측 \'정밀도\'를 높여 수익률을 극대화할 수 있는가?',
+                    summary: '과거 KOSPI 종가 데이터만을 사용해 여러 개별 모델의 예측을 결합하는 하이브리드 모델을 제안. 실험 결과, 예측 정밀도를 효과적으로 개선하여 상당한 모의 거래 수익을 달성함.', 
+                    metrics: [
+                        {label: '하락 예측 정확도', value: 79.8, color: 'blue'}, 
+                        {label: '하락 예측 정밀도', value: 64.3, color: 'violet'}
+                    ] 
+                },
+                { 
+                    id: 'lee', 
+                    title: 'ETF 분할매매 전략 최적화 (Lee, 2025)', 
+                    question: '기술적 지표를 활용하여 ETF 투자 비중을 동적으로 조절하는 자산 배분 전략을 개발하고, 여러 최적화 알고리즘을 통해 \'연평균 실현 수익률\'을 극대화하는 최적의 파라미터를 찾을 수 있는가?',
+                    summary: '가격의 상대적 위치와 시장 추세에 따라 보유 비중을 연속적으로 조절하는 동적 자산 배분 전략 제시. \'차분 진화(DE)\' 알고리즘이 과적합이 낮고 일반화 성능이 가장 우수했음.', 
+                    metrics: [
+                        {label: '연평균 수익률 (검증)', value: 39.5, color: 'blue'}
+                    ] 
+                }
             ];
 
             const literatureContainer = document.getElementById('literature-container');
+            const detailTitle = document.getElementById('detail-title');
+            const detailSections = document.getElementById('detail-sections');
+
             literatureData.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'literature-card glass-card p-4 rounded-lg cursor-pointer transition-all duration-300';
                 card.dataset.id = item.id;
-                card.innerHTML = `<h4 class="font-bold text-slate-100">${item.title}</h4>`;
+                card.innerHTML = `<h4 class="font-bold text-slate-100 pointer-events-none">${item.title}</h4>`;
                 literatureContainer.appendChild(card);
             });
+            
+            function updateDetails(selectedData) {
+                detailTitle.textContent = selectedData.title;
+                detailSections.innerHTML = `
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <h5 class="font-bold text-slate-400 mb-1">연구 문제/목적</h5>
+                            <p class="text-slate-300">${selectedData.question}</p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-400 mb-1">연구 개요</h5>
+                            <p class="text-slate-300">${selectedData.summary}</p>
+                        </div>
+                        <div>
+                            <h5 class="font-bold text-slate-400 mb-1">핵심 지표</h5>
+                            <div id="detail-metrics" class="mt-2 space-y-2"></div>
+                        </div>
+                    </div>
+                `;
 
-            const detailTitle = document.getElementById('detail-title');
-            const detailSummary = document.getElementById('detail-summary');
-            const detailMetrics = document.getElementById('detail-metrics');
+                const metricsContainer = document.getElementById('detail-metrics');
+                if (selectedData.metrics && selectedData.metrics.length > 0) {
+                    selectedData.metrics.forEach(metric => {
+                        const colorClasses = {
+                            blue: 'from-blue-500 to-cyan-400',
+                            violet: 'from-violet-500 to-purple-400',
+                            amber: 'from-amber-500 to-orange-400',
+                            green: 'from-green-500 to-emerald-400'
+                        };
+                        const metricEl = document.createElement('div');
+                        metricEl.innerHTML = `
+                            <div class="flex justify-between mb-1 text-xs font-medium text-slate-300">
+                                <span>${metric.label}</span>
+                                <span class="font-bold">${metric.value}%</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-1.5">
+                                <div class="bg-gradient-to-r ${colorClasses[metric.color]} h-1.5 rounded-full progress-bar" style="width: 0%;" data-value="${metric.value}"></div>
+                            </div>
+                        `;
+                        metricsContainer.appendChild(metricEl);
+                    });
+
+                    setTimeout(() => {
+                        metricsContainer.querySelectorAll('.progress-bar').forEach(bar => {
+                            bar.style.width = bar.dataset.value + '%';
+                        });
+                    }, 100);
+                }
+            }
+
 
             literatureContainer.addEventListener('click', (e) => {
                 const card = e.target.closest('.literature-card');
@@ -204,38 +334,19 @@
                 card.classList.add('active');
 
                 const selectedData = literatureData.find(item => item.id === card.dataset.id);
-                
-                detailTitle.textContent = selectedData.title;
-                detailSummary.textContent = selectedData.summary;
-                detailMetrics.innerHTML = '';
-                
-                selectedData.metrics.forEach(metric => {
-                    const colorClasses = {
-                        blue: 'from-blue-500 to-cyan-400',
-                        violet: 'from-violet-500 to-purple-400',
-                        amber: 'from-amber-500 to-orange-400',
-                        green: 'from-green-500 to-emerald-400'
-                    };
-                    const metricEl = document.createElement('div');
-                    metricEl.innerHTML = `
-                        <div class="flex justify-between mb-1 text-sm font-medium text-slate-300">
-                            <span>${metric.label}</span>
-                            <span class="font-bold">${metric.value}%</span>
-                        </div>
-                        <div class="w-full bg-slate-700 rounded-full h-2">
-                            <div class="bg-gradient-to-r ${colorClasses[metric.color]} h-2 rounded-full progress-bar" style="width: ${metric.value}%"></div>
-                        </div>
-                    `;
-                    detailMetrics.appendChild(metricEl);
-                });
+                updateDetails(selectedData);
+            });
+
+            updateDetails({
+                title: '문헌을 클릭하여 상세 정보를 확인하세요.',
+                question: '', summary: '', metrics: []
             });
 
 
-            // Chart.js
             const ctx = document.getElementById('performanceChart').getContext('2d');
             const labels = ['2020', '2021', '2022', '2023', '2024'];
-            const kospiData = [10000, 11200, 11800, 12500, 13800]; // Buy & Hold
-            const aiData = [10000, 13500, 16500, 21000, 28000]; // AI Strategy
+            const kospiData = [10000, 11200, 11800, 12500, 13800];
+            const aiData = [10000, 13500, 16500, 21000, 28000];
 
             const performanceChart = new Chart(ctx, {
                 type: 'line',
@@ -246,20 +357,13 @@
                         data: aiData,
                         borderColor: '#60a5fa',
                         backgroundColor: 'rgba(96, 165, 250, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#60a5fa',
+                        fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#60a5fa',
                     }, {
                         label: 'KOSPI 200 단순 보유',
                         data: kospiData,
                         borderColor: '#6b7280',
                         backgroundColor: 'rgba(107, 114, 128, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        hidden: true,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#6b7280',
+                        fill: true, tension: 0.4, hidden: true, pointRadius: 4, pointBackgroundColor: '#6b7280',
                     }]
                 },
                 options: {
@@ -279,30 +383,23 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                            titleFont: { weight: 'bold' },
-                            bodyFont: { size: 14 },
-                            padding: 12,
-                            cornerRadius: 8,
+                            mode: 'index', intersect: false, backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                            titleFont: { weight: 'bold' }, bodyFont: { size: 14 },
+                            padding: 12, cornerRadius: 8,
                         }
                     },
                     animation: {
-                        duration: 2000,
-                        easing: 'easeInOutQuart'
+                        duration: 2000, easing: 'easeInOutQuart'
                     }
                 }
             });
 
-            // Toggle Chart Datasets
             const strategyToggle = document.getElementById('strategyToggle');
             strategyToggle.addEventListener('change', () => {
                 performanceChart.data.datasets[0].hidden = !strategyToggle.checked;
                 performanceChart.data.datasets[1].hidden = strategyToggle.checked;
                 performanceChart.update();
             });
-             // Default state based on toggle
             performanceChart.data.datasets[0].hidden = !strategyToggle.checked;
             performanceChart.data.datasets[1].hidden = strategyToggle.checked;
             performanceChart.update();
